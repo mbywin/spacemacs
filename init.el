@@ -32,12 +32,13 @@ values."
    dotspacemacs-configuration-layers
    '(
      python
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
+     ;; ivy
      helm
      auto-completion
      better-defaults
@@ -66,8 +67,22 @@ values."
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
-                                    vi-tilde-fringe
-                                    evil-unimpaired
+                    magit-gh-pulls magit-gitflow org-projectile evil-mc
+                    evil-args evil-ediff evil-exchange evil-unimpaired
+                    evil-indent-plus volatile-highlights smartparens
+                    spaceline holy-mode skewer-mode rainbow-delimiters
+                    highlight-indentation vi-tilde-fringe eyebrowse
+                    org-bullets smooth-scrolling org-repo-todo org-download org-timer
+                    livid-mode git-gutter git-gutter-fringe  evil-escape
+                    leuven-theme gh-md evil-lisp-state spray lorem-ipsum
+                    ac-ispell ace-jump-mode auto-complete auto-dictionary
+                    clang-format define-word google-translate disaster epic
+                    fancy-battery org-present orgit orglue spacemacs-theme
+                    helm-flyspell flyspell-correct-helm clean-aindent-mode
+                    helm-c-yasnippet ace-jump-helm-line helm-make magithub
+                    helm-themes helm-swoop helm-spacemacs-help smeargle
+                    ido-vertical-mode flx-ido company-quickhelp counsel-projectile
+                    ;; window-purpose ivy-purpose helm-purpose spacemacs-purpose-popwin
                                    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -147,7 +162,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro Bold"
-                               :size 30
+                               :size 17
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -320,7 +335,7 @@ you should place your code here."
   ;; 设置中文字体
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "kaiti" :size 30)))
+                      charset (font-spec :family "kaiti" :size 17)))
 
   (setq with-editor-emacsclient-executable nil)
   (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
@@ -343,3 +358,23 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data wrap-region visual-regexp-steroids visual-regexp tiny peep-dired paredit org-octopress ctable orglue epic org-mac-link nodejs-repl multiple-cursors lispy zoutline impatient-mode simple-httpd highlight-global helm-github-stars find-file-in-project etags-select discover-my-major makey cmake-font-lock cmake-mode 4clojure yapfify winum unfill pyvenv pytest pyenv-mode py-isort pip-requirements monokai-theme live-py-mode ivy-purpose hy-mode helm-purpose window-purpose imenu-list fuzzy cython-mode company-anaconda anaconda-mode pythonic helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag flyspell-correct-helm ace-jump-helm-line solarized-theme youdao-dictionary names chinese-word-at-point smeargle orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow htmlize gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler window-numbering which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy quelpa package-build spacemacs-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
