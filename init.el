@@ -40,7 +40,9 @@ values."
      ;; ----------------------------------------------------------------
      ;; ivy
      helm
-     auto-completion
+     (auto-completion :variables auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t
+                      :disabled-for org markdown)
      better-defaults
      emacs-lisp
      ;; git
@@ -61,7 +63,6 @@ values."
    dotspacemacs-additional-packages '(
                                 monokai-theme
                                 solarized-theme
-                                youdao-dictionary
                               )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -196,7 +197,7 @@ values."
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
-   dotspacemacs-visual-line-move-text nil
+   dotspacemacs-visual-line-move-text t
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
@@ -274,7 +275,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -332,6 +333,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (linum-relative-on)
   ;; 设置中文字体
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
