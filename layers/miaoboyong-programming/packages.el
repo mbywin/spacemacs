@@ -14,7 +14,7 @@
 (setq miaoboyong-programming-packages
       '(
         css-mode
-        paredit
+        ;; paredit
         lispy
         cmake-font-lock
         cmake-mode
@@ -32,48 +32,48 @@
         lua-mode
         (cc-mode :location built-in)
         ;; flycheck-clojure
-        etags-select
+        ;; etags-select
         (python :location built-in)
         (emacs-lisp :location built-in)
         ;; clojure-mode
-        company
+        ;; company
         (eldoc :location built-in)
         dumb-jump
         graphviz-dot-mode
         cider
         ;; editorconfig
-        robe
+        ;; robe
         ))
 
-(defun miaoboyong-programming/post-init-robe ()
-  (progn
-    (add-hook 'inf-ruby-mode-hook 'spacemacs/toggle-auto-completion-on)
-    (defun miaoboyong/ruby-send-current-line (&optional print)
-      "Send the current line to the inferior Ruby process."
-      (interactive "P")
-      (ruby-send-region
-       (line-beginning-position)
-       (line-end-position))
-      (when print (ruby-print-result)))
+;; (defun miaoboyong-programming/post-init-robe ()
+;;   (progn
+;;     (add-hook 'inf-ruby-mode-hook 'spacemacs/toggle-auto-completion-on)
+;;     (defun miaoboyong/ruby-send-current-line (&optional print)
+;;       "Send the current line to the inferior Ruby process."
+;;       (interactive "P")
+;;       (ruby-send-region
+;;        (line-beginning-position)
+;;        (line-end-position))
+;;       (when print (ruby-print-result)))
 
-    (defun miaoboyong/ruby-send-current-line-and-go ()
-      (interactive)
-      (miaoboyong/ruby-send-current-line)
-      (ruby-switch-to-inf t))
+    ;; (defun miaoboyong/ruby-send-current-line-and-go ()
+    ;;   (interactive)
+    ;;   (miaoboyong/ruby-send-current-line)
+    ;;   (ruby-switch-to-inf t))
 
-    (defun miaoboyong/start-inf-ruby-and-robe ()
-      (interactive)
-      (when (not (get-buffer "*ruby*"))
-        (inf-ruby))
-      (robe-start))
+    ;; (defun miaoboyong/start-inf-ruby-and-robe ()
+    ;;   (interactive)
+    ;;   (when (not (get-buffer "*ruby*"))
+    ;;     (inf-ruby))
+    ;;   (robe-start))
 
-    (dolist (mode '(ruby-mode enh-ruby-mode))
-      (spacemacs/set-leader-keys-for-major-mode mode
-        "sb" 'ruby-send-block
-        "sB" 'ruby-send-buffer
-        "sl" 'miaoboyong/ruby-send-current-line
-        "sL" 'miaoboyong/ruby-send-current-line-and-go
-        "sI" 'miaoboyong/start-inf-ruby-and-robe))))
+    ;; (dolist (mode '(ruby-mode enh-ruby-mode))
+    ;;   (spacemacs/set-leader-keys-for-major-mode mode
+    ;;     "sb" 'ruby-send-block
+    ;;     "sB" 'ruby-send-buffer
+    ;;     "sl" 'miaoboyong/ruby-send-current-line
+    ;;     "sL" 'miaoboyong/ruby-send-current-line-and-go
+    ;;     "sI" 'miaoboyong/start-inf-ruby-and-robe))))
 
 (defun miaoboyong-programming/init-editorconfig ()
   (use-package editorconfig
@@ -503,78 +503,78 @@
     :init
     (eval-after-load 'flycheck '(flycheck-clojure-setup))))
 
-(defun miaoboyong-programming/post-init-ycmd ()
-  (progn
-    (setq ycmd-tag-files 'auto)
-    (setq ycmd-request-message-level -1)
-    (set-variable 'ycmd-server-command `("python" ,(expand-file-name "~/Github/ycmd/ycmd/__main__.py")))
-    (setq company-backends-c-mode-common '((company-c-headers
-                                            company-dabbrev-code
-                                            company-keywords
-                                            company-gtags :with company-yasnippet)
-                                           company-files company-dabbrev ))
+;; (defun miaoboyong-programming/post-init-ycmd ()
+;;   (progn
+;;     (setq ycmd-tag-files 'auto)
+;;     (setq ycmd-request-message-level -1)
+;;     (set-variable 'ycmd-server-command `("python" ,(expand-file-name "~/Github/ycmd/ycmd/__main__.py")))
+;;     (setq company-backends-c-mode-common '((company-c-headers
+;;                                             company-dabbrev-code
+;;                                             company-keywords
+;;                                             company-gtags :with company-yasnippet)
+;;                                            company-files company-dabbrev ))
 
-    (miaoboyong|toggle-company-backends company-ycmd)
-    (eval-after-load 'ycmd
-      '(spacemacs|hide-lighter ycmd-mode))
+;;     (miaoboyong|toggle-company-backends company-ycmd)
+;;     (eval-after-load 'ycmd
+;;       '(spacemacs|hide-lighter ycmd-mode))
 
-    (spacemacs/set-leader-keys-for-major-mode 'c-mode
-      "tb" 'zilong/company-toggle-company-ycmd)
-    (spacemacs/set-leader-keys-for-major-mode 'c++-mode
-      "tb" 'zilong/company-toggle-company-ycmd)))
+;;     (spacemacs/set-leader-keys-for-major-mode 'c-mode
+;;       "tb" 'zilong/company-toggle-company-ycmd)
+;;     (spacemacs/set-leader-keys-for-major-mode 'c++-mode
+;;       "tb" 'zilong/company-toggle-company-ycmd)))
 
 ;; when many project has the need to use tags, I will give etags-table and etags-update a try
-(defun miaoboyong-programming/init-etags-select ()
-  (use-package etags-select
-    :init
-    (progn
-      (define-key evil-normal-state-map (kbd "gf")
-        (lambda () (interactive) (find-tag (find-tag-default-as-regexp))))
+;; (defun miaoboyong-programming/init-etags-select ()
+;;   (use-package etags-select
+;;     :init
+;;     (progn
+;;       (define-key evil-normal-state-map (kbd "gf")
+;;         (lambda () (interactive) (find-tag (find-tag-default-as-regexp))))
 
-      (define-key evil-normal-state-map (kbd "gb") 'pop-tag-mark)
+;;       (define-key evil-normal-state-map (kbd "gb") 'pop-tag-mark)
 
-      (define-key evil-normal-state-map (kbd "gn")
-        (lambda () (interactive) (find-tag last-tag t)))
+;;       (define-key evil-normal-state-map (kbd "gn")
+;;         (lambda () (interactive) (find-tag last-tag t)))
 
-      (evilified-state-evilify etags-select-mode etags-select-mode-map)
-      (spacemacs/set-leader-keys-for-major-mode 'js2-mode
-        "gd" 'etags-select-find-tag-at-point))))
+;;       (evilified-state-evilify etags-select-mode etags-select-mode-map)
+;;       (spacemacs/set-leader-keys-for-major-mode 'js2-mode
+;;         "gd" 'etags-select-find-tag-at-point))))
 
-(defun miaoboyong-programming/init-gulpjs ()
-  (use-package gulpjs
-    :init
-    (progn
-      (defun zilong/build-engine ()
-        (interactive)
-        (gulpjs-start-task-with-file-name "~/Github/fireball/app.js"))
+;; (defun miaoboyong-programming/init-gulpjs ()
+;;   (use-package gulpjs
+;;     :init
+;;     (progn
+;;       (defun zilong/build-engine ()
+;;         (interactive)
+;;         (gulpjs-start-task-with-file-name "~/Github/fireball/app.js"))
 
-      (spacemacs/set-leader-keys "ags" 'gulpjs-start-task)
-      (spacemacs/set-leader-keys "agS" 'zilong/build-engine)
-      (spacemacs/set-leader-keys "agr" 'gulpjs-restart-task))))
+;;       (spacemacs/set-leader-keys "ags" 'gulpjs-start-task)
+;;       (spacemacs/set-leader-keys "agS" 'zilong/build-engine)
+;;       (spacemacs/set-leader-keys "agr" 'gulpjs-restart-task))))
 
 
-(defun miaoboyong-programming/init-paredit ()
-  (use-package paredit
-    :commands (paredit-wrap-round
-               paredit-wrap-square
-               paredit-wrap-curly
-               paredit-splice-sexp-killing-backward)
-    :init
-    (progn
+;; (defun miaoboyong-programming/init-paredit ()
+;;   (use-package paredit
+;;     :commands (paredit-wrap-round
+;;                paredit-wrap-square
+;;                paredit-wrap-curly
+;;                paredit-splice-sexp-killing-backward)
+;;     :init
+;;     (progn
 
-      (bind-key* "s-(" #'paredit-wrap-round)
-      (bind-key* "s-[" #'paredit-wrap-square)
-      (bind-key* "s-{" #'paredit-wrap-curly)
-      )))
+;;       (bind-key* "s-(" #'paredit-wrap-round)
+;;       (bind-key* "s-[" #'paredit-wrap-square)
+;;       (bind-key* "s-{" #'paredit-wrap-curly)
+;;       )))
 
-(defun miaoboyong-programming/post-init-company ()
-  (progn
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.08)
+;; (defun miaoboyong-programming/post-init-company ()
+;;   (progn
+;;     (setq company-minimum-prefix-length 1
+;;           company-idle-delay 0.08)
 
-    (when (configuration-layer/package-usedp 'company)
-      (spacemacs|add-company-backends :modes shell-script-mode makefile-bsdmake-mode sh-mode lua-mode nxml-mode conf-unix-mode json-mode graphviz-dot-mode))
-    ))
+;;     (when (configuration-layer/package-usedp 'company)
+;;       (spacemacs|add-company-backends :modes shell-script-mode makefile-bsdmake-mode sh-mode lua-mode nxml-mode conf-unix-mode json-mode graphviz-dot-mode))
+;;     ))
 ;; (defun miaoboyong-programming/post-init-company-c-headers ()
 ;;   (progn
 ;;     (setq company-c-headers-path-system

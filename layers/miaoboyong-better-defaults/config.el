@@ -97,7 +97,7 @@
 (add-hook 'kill-emacs-hook #'miaoboyong/cleanup-recentf)
 
 ;; change evil initial mode state
-(menu-bar-mode t)
+(menu-bar-mode -1)
 
 (add-hook 'before-save-hook
           (lambda ()

@@ -10,9 +10,7 @@
 
 (setq miaoboyong-misc-packages
       '(
-        projectile
         prodigy
-        find-file-in-project
         multiple-cursors
         visual-regexp
         visual-regexp-steroids
@@ -23,17 +21,16 @@
         ace-window
         avy
         4clojure
-        persp-mode
         helm-github-stars
         helm
         tiny
         ;; smartparens
         flyspell-correct
         peep-dired
-        markdown-mode
+        ;; markdown-mode
         swiper
-        magit
-        git-messenger
+        ;; magit
+        ;; git-messenger
         gist
         hydra
         wrap-region
@@ -857,90 +854,90 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
             orgtbl-hijacker-command-109))
     ))
 
-(defun miaoboyong-misc/post-init-persp-mode ()
-  (setq persp-kill-foreign-buffer-action 'kill)
-  (setq persp-lighter nil)
-  (when (fboundp 'spacemacs|define-custom-layout)
-    (spacemacs|define-custom-layout "@Cocos2D-X"
-      :binding "c"
-      :body
-      (find-file "~/cocos2d-x/cocos/ui/UIWidget.cpp")
-      (split-window-right)
-      (find-file "~/cocos2d-x/cocos/cocos2d.cpp"))))
+;; (defun miaoboyong-misc/post-init-persp-mode ()
+;;   (setq persp-kill-foreign-buffer-action 'kill)
+;;   (setq persp-lighter nil)
+;;   (when (fboundp 'spacemacs|define-custom-layout)
+;;     (spacemacs|define-custom-layout "@Cocos2D-X"
+;;       :binding "c"
+;;       :body
+;;       (find-file "~/cocos2d-x/cocos/ui/UIWidget.cpp")
+;;       (split-window-right)
+;;       (find-file "~/cocos2d-x/cocos/cocos2d.cpp"))))
 
-(defun miaoboyong-misc/post-init-chinese-wbim ()
-  (progn
-    (bind-key* ";" 'chinese-wbim-insert-ascii)
-    (setq chinese-wbim-punc-translate-p nil)
-    (spacemacs/declare-prefix "ot" "Toggle")
-    (spacemacs/set-leader-keys
-      "otp" 'chinese-wbim-punc-translate-toggle)
-    (setq chinese-wbim-wb-use-gbk t)
-    (add-hook 'chinese-wbim-wb-load-hook
-              (lambda ()
-                (let ((map (chinese-wbim-mode-map)))
-                  (define-key map "-" 'chinese-wbim-previous-page)
-                  (define-key map "=" 'chinese-wbim-next-page))))
-    ))
+;; (defun miaoboyong-misc/post-init-chinese-wbim ()
+;;   (progn
+;;     (bind-key* ";" 'chinese-wbim-insert-ascii)
+;;     (setq chinese-wbim-punc-translate-p nil)
+;;     (spacemacs/declare-prefix "ot" "Toggle")
+;;     (spacemacs/set-leader-keys
+;;       "otp" 'chinese-wbim-punc-translate-toggle)
+;;     (setq chinese-wbim-wb-use-gbk t)
+;;     (add-hook 'chinese-wbim-wb-load-hook
+;;               (lambda ()
+;;                 (let ((map (chinese-wbim-mode-map)))
+;;                   (define-key map "-" 'chinese-wbim-previous-page)
+;;                   (define-key map "=" 'chinese-wbim-next-page))))
+;;     ))
 
 
 (defun miaoboyong-misc/post-init-evil-escape ()
   (setq evil-escape-delay 0.2))
 
-(defun miaoboyong-misc/init-find-file-in-project ()
-  (use-package find-file-in-project
-    :defer t
-    :config
-    (progn
-      ;; If you use other VCS (subversion, for example), enable the following option
-      ;;(setq ffip-project-file ".svn")
-      ;; in MacOS X, the search file command is CMD+p
-      ;; for this project, I'm only interested certain types of files
-      (setq-default ffip-patterns '("*.html" "*.js" "*.css" "*.java" "*.xml" "*.cpp" "*.h" "*.c" "*.mm" "*.m" "*.el"))
-      ;; if the full path of current file is under SUBPROJECT1 or SUBPROJECT2
-      ;; OR if I'm reading my personal issue track document,
-      (defadvice find-file-in-project (before my-find-file-in-project activate compile)
-        (when (ffip-current-full-filename-match-pattern-p "\\(/fireball\\)")
-          ;; set the root directory into "~/projs/PROJECT_DIR"
-          (setq-local ffip-project-root "~/Github/fireball")
-          ;; well, I'm not interested in concatenated BIG js file or file in dist/
-          (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
-          ;; do NOT search files in below directories, the default value is better.
-          (dolist (item '("*/docs/html/*" "*.meta" "*/cocos2d-x/*" "*.asset" "*/visual-tests/res/*"))
-            (push item  ffip-prune-patterns)))
-        (when (ffip-current-full-filename-match-pattern-p "\\(/cocos2d-x\\)")
-          ;; set the root directory into "~/projs/PROJECT_DIR"
-          (setq-local ffip-project-root "~/cocos2d-x")
-          ;; well, I'm not interested in concatenated BIG js file or file in dist/
-          (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
-          ;; do NOT search files in below directories, the default value is better.
-          ;; (setq-default ffip-prune-patterns '(".git" ".hg" "*.svn" "node_modules" "bower_components" "obj"))
-          ))
-      (ad-activate 'find-file-in-project))))
+;; (defun miaoboyong-misc/init-find-file-in-project ()
+;;   (use-package find-file-in-project
+;;     :defer t
+;;     :config
+;;     (progn
+;;       ;; If you use other VCS (subversion, for example), enable the following option
+;;       ;;(setq ffip-project-file ".svn")
+;;       ;; in MacOS X, the search file command is CMD+p
+;;       ;; for this project, I'm only interested certain types of files
+;;       (setq-default ffip-patterns '("*.html" "*.js" "*.css" "*.java" "*.xml" "*.cpp" "*.h" "*.c" "*.mm" "*.m" "*.el"))
+;;       ;; if the full path of current file is under SUBPROJECT1 or SUBPROJECT2
+;;       ;; OR if I'm reading my personal issue track document,
+;;       (defadvice find-file-in-project (before my-find-file-in-project activate compile)
+;;         (when (ffip-current-full-filename-match-pattern-p "\\(/fireball\\)")
+;;           ;; set the root directory into "~/projs/PROJECT_DIR"
+;;           (setq-local ffip-project-root "~/Github/fireball")
+;;           ;; well, I'm not interested in concatenated BIG js file or file in dist/
+;;           (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
+;;           ;; do NOT search files in below directories, the default value is better.
+;;           (dolist (item '("*/docs/html/*" "*.meta" "*/cocos2d-x/*" "*.asset" "*/visual-tests/res/*"))
+;;             (push item  ffip-prune-patterns)))
+;;         (when (ffip-current-full-filename-match-pattern-p "\\(/cocos2d-x\\)")
+;;           ;; set the root directory into "~/projs/PROJECT_DIR"
+;;           (setq-local ffip-project-root "~/cocos2d-x")
+;;           ;; well, I'm not interested in concatenated BIG js file or file in dist/
+;;           (setq-local ffip-find-options "-not -size +64k -not -iwholename '*/bin/*'")
+;;           ;; do NOT search files in below directories, the default value is better.
+;;           ;; (setq-default ffip-prune-patterns '(".git" ".hg" "*.svn" "node_modules" "bower_components" "obj"))
+;;           ))
+;;       (ad-activate 'find-file-in-project))))
 
 
 
 
-(defun miaoboyong-misc/post-init-projectile ()
-  (progn
-    (with-eval-after-load 'projectile
-      (progn
-        (setq projectile-completion-system 'ivy)
-        (add-to-list 'projectile-other-file-alist '("html" "js"))
-        (add-to-list 'projectile-other-file-alist '("js" "html"))))
+;; (defun miaoboyong-misc/post-init-projectile ()
+;;   (progn
+;;     (with-eval-after-load 'projectile
+;;       (progn
+;;         (setq projectile-completion-system 'ivy)
+;;         (add-to-list 'projectile-other-file-alist '("html" "js"))
+;;         (add-to-list 'projectile-other-file-alist '("js" "html"))))
 
-    (defvar my-simple-todo-regex "\\<\\(FIXME\\|TODO\\|BUG\\):")
+;;     (defvar my-simple-todo-regex "\\<\\(FIXME\\|TODO\\|BUG\\):")
 
-    (defun my-simple-todo ()
-      "When in a project, create a `multi-occur' buffer matching the
-  regex in `my-simple-todo-regex' across all buffers in the
-  current project. Otherwise do `occur' in the current file."
-      (interactive)
-      (if (projectile-project-p)
-          (multi-occur (projectile-project-buffers) my-simple-todo-regex)
-        (occur my-simple-todo-regex)))
-    (spacemacs/set-leader-keys "pf" 'miaoboyong/open-file-with-projectile-or-counsel-git)
-    (spacemacs/set-leader-keys "pt" 'my-simple-todo)))
+;;     (defun my-simple-todo ()
+;;       "When in a project, create a `multi-occur' buffer matching the
+;;   regex in `my-simple-todo-regex' across all buffers in the
+;;   current project. Otherwise do `occur' in the current file."
+;;       (interactive)
+;;       (if (projectile-project-p)
+;;           (multi-occur (projectile-project-buffers) my-simple-todo-regex)
+;;         (occur my-simple-todo-regex)))
+;;     (spacemacs/set-leader-keys "pf" 'miaoboyong/open-file-with-projectile-or-counsel-git)
+;;     (spacemacs/set-leader-keys "pt" 'my-simple-todo)))
 
 
 
@@ -1069,56 +1066,56 @@ Search for a search tool in the order provided by `dotspacemacs-search-tools'."
     (define-key global-map (kbd "C-s") 'my-swiper-search)))
 
 
-(defun miaoboyong-misc/post-init-magit ()
-  (progn
-    (with-eval-after-load 'magit
-      (progn
+;; (defun miaoboyong-misc/post-init-magit ()
+;;   (progn
+;;     (with-eval-after-load 'magit
+;;       (progn
 
-        (add-to-list 'magit-no-confirm 'stage-all-changes)
-        (define-key magit-log-mode-map (kbd "W") 'magit-copy-section-value)
-        (define-key magit-status-mode-map (kbd "s-1") 'magit-jump-to-unstaged)
-        (define-key magit-status-mode-map (kbd "s-2") 'magit-jump-to-untracked)
-        (define-key magit-status-mode-map (kbd "s-3") 'magit-jump-to-staged)
-        (define-key magit-status-mode-map (kbd "s-4") 'magit-jump-to-stashes)
-        (setq magit-completing-read-function 'magit-builtin-completing-read)
+;;         (add-to-list 'magit-no-confirm 'stage-all-changes)
+;;         (define-key magit-log-mode-map (kbd "W") 'magit-copy-section-value)
+;;         (define-key magit-status-mode-map (kbd "s-1") 'magit-jump-to-unstaged)
+;;         (define-key magit-status-mode-map (kbd "s-2") 'magit-jump-to-untracked)
+;;         (define-key magit-status-mode-map (kbd "s-3") 'magit-jump-to-staged)
+;;         (define-key magit-status-mode-map (kbd "s-4") 'magit-jump-to-stashes)
+;;         (setq magit-completing-read-function 'magit-builtin-completing-read)
 
-        (magit-define-popup-switch 'magit-push-popup ?u
-          "Set upstream" "--set-upstream")
-        ))
+;;         (magit-define-popup-switch 'magit-push-popup ?u
+;;           "Set upstream" "--set-upstream")
+;;         ))
 
-    ;; prefer two way ediff
-    (setq magit-ediff-dwim-show-on-hunks t)
+;;     ;; prefer two way ediff
+;;     (setq magit-ediff-dwim-show-on-hunks t)
 
-    (setq magit-repository-directories '("~/cocos2d-x/"))
-    (setq magit-push-always-verify nil)
+;;     ;; (setq magit-repository-directories '("~/cocos2d-x/"))
+;;     (setq magit-push-always-verify nil)
 
-    (eval-after-load 'magit
-      '(define-key magit-mode-map (kbd "C-c g")
-         #'miaoboyong/magit-visit-pull-request))
+;;     (eval-after-load 'magit
+;;       '(define-key magit-mode-map (kbd "C-c g")
+;;          #'miaoboyong/magit-visit-pull-request))
 
-    (setq magit-process-popup-time 10)))
+;;     (setq magit-process-popup-time 10)))
 
-(defun miaoboyong-misc/post-init-git-messenger ()
-  (use-package git-messenger
-    :defer t
-    :config
-    (progn
-      (define-key git-messenger-map (kbd "f") 'zilong/github-browse-commit))))
+;; (defun miaoboyong-misc/post-init-git-messenger ()
+;;   (use-package git-messenger
+;;     :defer t
+;;     :config
+;;     (progn
+;;       (define-key git-messenger-map (kbd "f") 'zilong/github-browse-commit))))
 
-(defun miaoboyong-misc/post-init-markdown-mode ()
-  (progn
-    (add-to-list 'auto-mode-alist '("\\.mdown\\'" . markdown-mode))
+;; (defun miaoboyong-misc/post-init-markdown-mode ()
+;;   (progn
+;;     (add-to-list 'auto-mode-alist '("\\.mdown\\'" . markdown-mode))
 
-    (with-eval-after-load 'markdown-mode
-      (progn
-        ;; (when (configuration-layer/package-usedp 'company)
-        ;;   (spacemacs|add-company-hook markdown-mode))
+;;     (with-eval-after-load 'markdown-mode
+;;       (progn
+;;         ;; (when (configuration-layer/package-usedp 'company)
+;;         ;;   (spacemacs|add-company-hook markdown-mode))
 
-        (spacemacs/set-leader-keys-for-major-mode 'gfm-mode-map
-          "p" 'miaoboyong/markdown-to-html)
-        (spacemacs/set-leader-keys-for-major-mode 'markdown-mode
-          "p" 'miaoboyong/markdown-to-html)
+;;         (spacemacs/set-leader-keys-for-major-mode 'gfm-mode-map
+;;           "p" 'miaoboyong/markdown-to-html)
+;;         (spacemacs/set-leader-keys-for-major-mode 'markdown-mode
+;;           "p" 'miaoboyong/markdown-to-html)
 
-        (evil-define-key 'normal markdown-mode-map (kbd "TAB") 'markdown-cycle)
-        ))
-    ))
+;;         (evil-define-key 'normal markdown-mode-map (kbd "TAB") 'markdown-cycle)
+;;         ))
+;;     ))

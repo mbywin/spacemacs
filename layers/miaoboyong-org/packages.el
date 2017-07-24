@@ -280,9 +280,9 @@ unwanted space when exporting org-mode to html."
       (setq org-publish-project-alist
             `(
               ("blog-notes"
-               :base-directory "~/org-notes"
+               :base-directory "C:\\Users\\miaoboyong\\OneDrive\\MyWork\\org-notes"
                :base-extension "org"
-               :publishing-directory "~/org-notes/public_html/"
+               :publishing-directory "C:\\Users\\miaoboyong\\OneDrive\\MyWork\\org-notes\\public_html"
 
                :recursive t
                :html-head , miaoboyong-website-html-blog-head
@@ -302,9 +302,9 @@ unwanted space when exporting org-mode to html."
                :sitemap-file-entry-format "%t" ; %d to output date, we don't need date here
                )
               ("blog-static"
-               :base-directory "~/org-notes"
+               :base-directory "C:\\Users\\miaoboyong\\OneDrive\\MyWork\\org-notes"
                :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-               :publishing-directory "~/org-notes/public_html/"
+               :publishing-directory "C:\\Users\\miaoboyong\\OneDrive\\MyWork\\org-notes\\public_html"
                :recursive t
                :publishing-function org-publish-attachment
                )

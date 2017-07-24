@@ -49,32 +49,32 @@
           (delete-char 1)))))
 
 
-(defun miaoboyong/load-my-layout ()
-  (interactive)
-  (persp-load-state-from-file (concat persp-save-dir "zilong")))
+;; (defun miaoboyong/load-my-layout ()
+;;   (interactive)
+;;   (persp-load-state-from-file (concat persp-save-dir "zilong")))
 
-(defun miaoboyong/save-my-layout ()
-  (interactive)
-  (persp-save-state-to-file (concat persp-save-dir "zilong")))
+;; (defun miaoboyong/save-my-layout ()
+;;   (interactive)
+;;   (persp-save-state-to-file (concat persp-save-dir "zilong")))
 
 ;; http://blog.binchen.org/posts/use-ivy-mode-to-search-bash-history.html
 ;; ;FIXME: make it work with zsh
-(defun counsel-yank-bash-history ()
-  "Yank the bash history"
-  (interactive)
-  (let (hist-cmd collection val)
-    (shell-command "history -r") ; reload history
-    (setq collection
-          (nreverse
-           (split-string (with-temp-buffer (insert-file-contents (file-truename "~/.bash_history"))
-                                           (buffer-string))
-                         "\n"
-                         t)))
-    (when (and collection (> (length collection) 0)
-               (setq val (if (= 1 (length collection)) (car collection)
-                           (ivy-read (format "Bash history:") collection))))
-      (kill-new val)
-      (message "%s => kill-ring" val))))
+;; (defun counsel-yank-bash-history ()
+;;   "Yank the bash history"
+;;   (interactive)
+;;   (let (hist-cmd collection val)
+;;     (shell-command "history -r") ; reload history
+;;     (setq collection
+;;           (nreverse
+;;            (split-string (with-temp-buffer (insert-file-contents (file-truename "~/.bash_history"))
+;;                                            (buffer-string))
+;;                          "\n"
+;;                          t)))
+;;     (when (and collection (> (length collection) 0)
+;;                (setq val (if (= 1 (length collection)) (car collection)
+;;                            (ivy-read (format "Bash history:") collection))))
+;;       (kill-new val)
+;;       (message "%s => kill-ring" val))))
 
   ;; my fix for tab indent
 (defun miaoboyong/indent-region(numSpaces)
@@ -193,32 +193,32 @@ e.g. Sunday, September 17, 2000."
   (insert (format-time-string "%A, %B %e, %Y")))
 
 ;; https://github.com/syohex/emacs-browser-refresh/blob/master/browser-refresh.el
-(defun miaoboyong/browser-refresh--chrome-applescript ()
-  (interactive)
-  (do-applescript
-   (format
-    "
-  tell application \"Google Chrome\"
-    set winref to a reference to (first window whose title does not start with \"Developer Tools - \")
-    set winref's index to 1
-    reload active tab of winref
-  end tell
-" )))
+;; (defun miaoboyong/browser-refresh--chrome-applescript ()
+;;   (interactive)
+;;   (do-applescript
+;;    (format
+;;     "
+;;   tell application \"Google Chrome\"
+;;     set winref to a reference to (first window whose title does not start with \"Developer Tools - \")
+;;     set winref's index to 1
+;;     reload active tab of winref
+;;   end tell
+;; " )))
 
 
-(define-minor-mode
-  shadowsocks-proxy-mode
-  :global t
-  :init-value nil
-  :lighter " SS"
-  (if shadowsocks-proxy-mode
-      (setq url-gateway-method 'socks)
-    (setq url-gateway-method 'native)))
+;; (define-minor-mode
+;;   shadowsocks-proxy-mode
+;;   :global t
+;;   :init-value nil
+;;   :lighter " SS"
+;;   (if shadowsocks-proxy-mode
+;;       (setq url-gateway-method 'socks)
+;;     (setq url-gateway-method 'native)))
 
 
-(define-global-minor-mode
-  global-shadowsocks-proxy-mode shadowsocks-proxy-mode shadowsocks-proxy-mode
-  :group 'shadowsocks-proxy)
+;; (define-global-minor-mode
+;;   global-shadowsocks-proxy-mode shadowsocks-proxy-mode shadowsocks-proxy-mode
+;;   :group 'shadowsocks-proxy)
 
 
 (defun miaoboyong/open-file-with-projectile-or-counsel-git ()
@@ -230,16 +230,16 @@ e.g. Sunday, September 17, 2000."
 
 
 ;; http://blog.lojic.com/2009/08/06/send-growl-notifications-from-carbon-emacs-on-osx/
-(defun miaoboyong/growl-notification (title message &optional sticky)
-  "Send a Growl notification"
-  (do-applescript
-   (format "tell application \"GrowlHelperApp\" \n
-              notify with name \"Emacs Notification\" title \"%s\" description \"%s\" application name \"Emacs.app\" sticky \"%s\"
-              end tell
-              "
-           title
-           message
-           (if sticky "yes" "no"))))
+;; (defun miaoboyong/growl-notification (title message &optional sticky)
+;;   "Send a Growl notification"
+;;   (do-applescript
+;;    (format "tell application \"GrowlHelperApp\" \n
+;;               notify with name \"Emacs Notification\" title \"%s\" description \"%s\" application name \"Emacs.app\" sticky \"%s\"
+;;               end tell
+;;               "
+;;            title
+;;            message
+;;            (if sticky "yes" "no"))))
 
 (defun miaoboyong/growl-timer (minutes message)
   "Issue a Growl notification after specified minutes"
@@ -307,37 +307,37 @@ e.g. Sunday, September 17, 2000."
     (forward-char 1)))
 
 ;; for running long run ansi-term
-(defun miaoboyong/named-term (name)
-  (interactive "sName: ")
-  (ansi-term "/bin/zsh" name))
+;; (defun miaoboyong/named-term (name)
+;;   (interactive "sName: ")
+;;   (ansi-term "/bin/zsh" name))
 
 
-(defun miaoboyong/ash-term-hooks ()
-  ;; dabbrev-expand in term
-  (define-key term-raw-escape-map "/"
-    (lambda ()
-      (interactive)
-      (let ((beg (point)))
-        (dabbrev-expand nil)
-        (kill-region beg (point)))
-      (term-send-raw-string (substring-no-properties (current-kill 0)))))
-  ;; yank in term (bound to C-c C-y)
-  (define-key term-raw-escape-map "\C-y"
-    (lambda ()
-      (interactive)
-      (term-send-raw-string (current-kill 0)))))
+;; (defun miaoboyong/ash-term-hooks ()
+;;   ;; dabbrev-expand in term
+;;   (define-key term-raw-escape-map "/"
+;;     (lambda ()
+;;       (interactive)
+;;       (let ((beg (point)))
+;;         (dabbrev-expand nil)
+;;         (kill-region beg (point)))
+;;       (term-send-raw-string (substring-no-properties (current-kill 0)))))
+;;   ;; yank in term (bound to C-c C-y)
+;;   (define-key term-raw-escape-map "\C-y"
+;;     (lambda ()
+;;       (interactive)
+;;       (term-send-raw-string (current-kill 0)))))
 
-(defun miaoboyong/terminal ()
-  "Switch to terminal. Launch if nonexistent."
-  (interactive)
-  (if (get-buffer "*ansi-term*")
-      (switch-to-buffer-other-window "*ansi-term*")
-    (progn
-      (split-window-right-and-focus)
-      (ansi-term "/bin/zsh")))
-  (get-buffer-process "*ansi-term*"))
+;; (defun miaoboyong/terminal ()
+;;   "Switch to terminal. Launch if nonexistent."
+;;   (interactive)
+;;   (if (get-buffer "*ansi-term*")
+;;       (switch-to-buffer-other-window "*ansi-term*")
+;;     (progn
+;;       (split-window-right-and-focus)
+;;       (ansi-term "/bin/zsh")))
+;;   (get-buffer-process "*ansi-term*"))
 
-(defalias 'tt 'miaoboyong/terminal)
+;; (defalias 'tt 'miaoboyong/terminal)
 
 ;;add count for chinese, mainly used for writing chinese blog post
 ;; http://kuanyui.github.io/2014/01/18/count-chinese-japanese-and-english-words-in-emacs/
@@ -488,27 +488,27 @@ With PREFIX, cd to project root."
                 (secure-hash algo (current-buffer))))
     (message "Checksum copied to kill-ring.")))
 
-(defun my-find-file-in-git-repo (repo)
-  (if (file-directory-p repo)
-      (let* ((default-directory repo)
-             (files (split-string (shell-command-to-string (format "cd %s && git ls-files" repo)) "\n" t)))
-        (ivy-read "files:" files
-                  :action 'find-file
-                  :caller 'my-find-file-in-git-repo))
-    (message "%s is not a valid directory." repo)))
+;; (defun my-find-file-in-git-repo (repo)
+;;   (if (file-directory-p repo)
+;;       (let* ((default-directory repo)
+;;              (files (split-string (shell-command-to-string (format "cd %s && git ls-files" repo)) "\n" t)))
+;;         (ivy-read "files:" files
+;;                   :action 'find-file
+;;                   :caller 'my-find-file-in-git-repo))
+;;     (message "%s is not a valid directory." repo)))
 
-(defun my-open-file-in-external-app (file)
-  "Open file in external application."
-  (interactive)
-  (let ((default-directory (miaoboyong/vcs-project-root))
-        (file-path file))
-    (if file-path
-        (cond
-         ((spacemacs/system-is-mswindows) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
-         ((spacemacs/system-is-mac) (shell-command (format "open \"%s\"" file-path)))
-         ((spacemacs/system-is-linux) (let ((process-connection-type nil))
-                                        (start-process "" nil "xdg-open" file-path))))
-      (message "No file associated to this buffer."))))
+;; (defun my-open-file-in-external-app (file)
+;;   "Open file in external application."
+;;   (interactive)
+;;   (let ((default-directory (miaoboyong/vcs-project-root))
+;;         (file-path file))
+;;     (if file-path
+;;         (cond
+;;          ((spacemacs/system-is-mswindows) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
+;;          ((spacemacs/system-is-mac) (shell-command (format "open \"%s\"" file-path)))
+;;          ((spacemacs/system-is-linux) (let ((process-connection-type nil))
+;;                                         (start-process "" nil "xdg-open" file-path))))
+;;       (message "No file associated to this buffer."))))
 
 (defun ivy-insert-action (x)
   (with-ivy-window
@@ -542,52 +542,52 @@ With PREFIX, cd to project root."
               :action 'my-find-file-in-git-repo
               :caller 'counsel-find-file-recent-directory)))
 
-(defun miaoboyong/magit-visit-pull-request ()
-  "Visit the current branch's PR on GitHub."
-  (interactive)
-  (let ((remote-branch (magit-get-current-branch)))
-    (cond
-     ((null remote-branch)
-      (message "No remote branch"))
-     (t
-      (browse-url
-       (format "https://github.com/%s/pull/new/%s"
-               (replace-regexp-in-string
-                "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
-                (magit-get "remote"
-                           (magit-get-remote)
-                           "url"))
-               remote-branch))))))
+;; (defun miaoboyong/magit-visit-pull-request ()
+;;   "Visit the current branch's PR on GitHub."
+;;   (interactive)
+;;   (let ((remote-branch (magit-get-current-branch)))
+;;     (cond
+;;      ((null remote-branch)
+;;       (message "No remote branch"))
+;;      (t
+;;       (browse-url
+;;        (format "https://github.com/%s/pull/new/%s"
+;;                (replace-regexp-in-string
+;;                 "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
+;;                 (magit-get "remote"
+;;                            (magit-get-remote)
+;;                            "url"))
+;;                remote-branch))))))
 
-(defun miaoboyong/markdown-to-html ()
-  (interactive)
-  (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) "5000")
-  (browse-url (format "http://localhost:5000/%s.%s" (file-name-base) (file-name-extension (buffer-file-name)))))
+;; (defun miaoboyong/markdown-to-html ()
+;;   (interactive)
+;;   (start-process "grip" "*gfm-to-html*" "grip" (buffer-file-name) "5000")
+;;   (browse-url (format "http://localhost:5000/%s.%s" (file-name-base) (file-name-extension (buffer-file-name)))))
 
-(defun zilong/github-browse-commit ()
-  "Show the GitHub page for the current commit."
-  (interactive)
-  (use-package github-browse-file
-    :commands (github-browse-file--relative-url))
+;; (defun miaoboyong/github-browse-commit ()
+;;   "Show the GitHub page for the current commit."
+;;   (interactive)
+;;   (use-package github-browse-file
+;;     :commands (github-browse-file--relative-url))
 
-  (let* ((commit git-messenger:last-commit-id)
-         (url (concat "https://github.com/"
-                      (github-browse-file--relative-url)
-                      "/commit/"
-                      commit)))
-    (github-browse--save-and-view url)
-    (git-messenger:popup-close)))
+;;   (let* ((commit git-messenger:last-commit-id)
+;;          (url (concat "https://github.com/"
+;;                       (github-browse-file--relative-url)
+;;                       "/commit/"
+;;                       commit)))
+;;     (github-browse--save-and-view url)
+;;     (git-messenger:popup-close)))
 
-(defun miaoboyong/search-in-fireball ()
-  (interactive)
-  (helm-do-ag (expand-file-name "~/Github/fireball/")))
+;; (defun miaoboyong/search-in-fireball ()
+;;   (interactive)
+;;   (helm-do-ag (expand-file-name "~/Github/fireball/")))
 
 
-(defun miaoboyong/show-current-buffer-major-mode ()
-  (interactive)
-  (describe-variable 'major-mode))
+;; (defun miaoboyong/show-current-buffer-major-mode ()
+;;   (interactive)
+;;   (describe-variable 'major-mode))
 
-(defun miaoboyong/counsel-imenu ()
-  (interactive)
-  (counsel-imenu)
-  (evil-set-jump))
+;; (defun miaoboyong/counsel-imenu ()
+;;   (interactive)
+;;   (counsel-imenu)
+;;   (evil-set-jump))
